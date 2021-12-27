@@ -198,11 +198,17 @@ export default function Liquidity({ walletType, userAddress, setPopupShow }) {
         );
       }
 
-      if (trade.LPAddress) {
+      let { pairAddress } = await getPair(
+        trade.tokenIn.address,
+        trade.tokenOut.address,
+        walletType
+      );
+
+      if (pairAddress) {
         let allowance = await checkAllowance(
           walletType,
           userAddress,
-          trade.LPAddress
+          pairAddress
         );
         console.log("allowance", allowance);
         LPAllowance = allowance > 0;
@@ -359,8 +365,8 @@ export default function Liquidity({ walletType, userAddress, setPopupShow }) {
   }, [percentage]);
 
   useEffect(() => {
-    getExchangeRate();
     getUserBalance();
+    getExchangeRate();
     checkUserAllowance();
   }, [trade.tokenIn, trade.tokenOut, userAddress]);
 
