@@ -224,7 +224,7 @@ export default function Swap({ walletType, userAddress, setPopupShow }) {
     let impact =
       ((trade.amountOut - amountWithNewRate) * 100) / trade.amountOut;
 
-    if (impact < 0) {
+    if (impact < 0 || !impact) {
       impact = 0;
     }
 
@@ -316,7 +316,7 @@ export default function Swap({ walletType, userAddress, setPopupShow }) {
                 <Info className="form__info-icon" />
               </span>
               <span className="form__text form__text--main">
-                {trade.amountOutMin} {trade.tokenOut.symbol}
+                {trade.amountOutMin || 0} {trade.tokenOut.symbol}
               </span>
             </li>
             <li className="form__info-item">
