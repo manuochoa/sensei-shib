@@ -6,6 +6,7 @@ import Arrows from "./../icons/Arrows";
 import Moralis from "moralis";
 import {
   swap,
+  getPair,
   getQuote,
   Approve,
   checkAllowance,
@@ -19,6 +20,8 @@ export default function Swap({ walletType, userAddress, setPopupShow }) {
   const [inBalance, setInBalance] = useState("");
   const [outBalance, setOutBalance] = useState("");
   const [enoughAllowance, setEnoughAllowance] = useState(true);
+  const [exchangeText, setExchangeText] = useState("");
+  const [impact, setImpact] = useState(0);
   const [trade, setTrade] = useState({
     amountIn: "",
     amountOut: "",
@@ -201,8 +204,35 @@ export default function Swap({ walletType, userAddress, setPopupShow }) {
     }
   };
 
-  const test = () => {
-    console.log(tokens, "tokens");
+  const getExchangeRate = async () => {
+    let { tokenAreserve, tokenBreserve } = await getPair(
+      trade.tokenIn.address,
+      trade.tokenOut.address,
+      walletType
+    );
+
+    const rate = tokenAreserve / tokenBreserve;
+
+    let amountIn = Moralis.Units.Token(trade.amountIn, trade.tokenIn.decimals);
+
+    let pairConstant = tokenAreserve * tokenBreserve;
+    let inAfterSwap = Number(tokenAreserve) + Number(amountIn);
+    let outAfterSwap = pairConstant / inAfterSwap;
+    let newRate = inAfterSwap / outAfterSwap;
+    let amountWithNewRate = trade.amountIn / newRate;
+
+    let impact =
+      ((trade.amountOut - amountWithNewRate) * 100) / trade.amountOut;
+
+    if (impact < 0) {
+      impact = 0;
+    }
+
+    const exchangeRate = `${rate.toFixed(6)} ${trade.tokenIn.symbol} per ${
+      trade.tokenOut.symbol
+    }`;
+    setExchangeText(exchangeRate);
+    setImpact(impact.toFixed(2));
   };
 
   useEffect(() => {
@@ -211,12 +241,17 @@ export default function Swap({ walletType, userAddress, setPopupShow }) {
 
   useEffect(() => {
     getUserBalance();
+    getExchangeRate();
   }, [trade.tokenIn, trade.tokenOut, userAddress]);
+
+  useEffect(() => {
+    getExchangeRate();
+  }, [trade.amountIn]);
 
   return (
     <Form trade={trade} setTrade={setTrade} className="form--swap" title="Swap">
       <>
-        <p className="form__text form__text--mb">Trade tokents in an instant</p>
+        <p className="form__text form__text--mb">Trade tokens in an instant</p>
         <FormInput
           tokens={tokens}
           value={trade.amountIn}
@@ -245,9 +280,7 @@ export default function Swap({ walletType, userAddress, setPopupShow }) {
         />
         <div className="form__row">
           <p className="form__text">Price</p>
-          <span className="form__text form__text--main">
-            99.9849 BNB per ETH
-          </span>
+          <span className="form__text form__text--main">{exchangeText}</span>
         </div>
         {userAddress === "" ? (
           <button
@@ -262,12 +295,17 @@ export default function Swap({ walletType, userAddress, setPopupShow }) {
           </button>
         ) : (
           <button
+            disabled={trade.amountIn >= inBalance}
             onClick={
               !enoughAllowance ? () => handleApprove() : () => initSwap()
             }
             className="button button--red button--form"
           >
-            {!enoughAllowance ? "Approve Token" : "Swap"}
+            {!enoughAllowance
+              ? "Approve Token"
+              : trade.amountIn <= inBalance
+              ? "Swap"
+              : "Insufficient Funds"}
           </button>
         )}
         <div className="form__info">
@@ -278,7 +316,7 @@ export default function Swap({ walletType, userAddress, setPopupShow }) {
                 <Info className="form__info-icon" />
               </span>
               <span className="form__text form__text--main">
-                {trade.amountOutMin}
+                {trade.amountOutMin} {trade.tokenOut.symbol}
               </span>
             </li>
             <li className="form__info-item">
@@ -286,7 +324,7 @@ export default function Swap({ walletType, userAddress, setPopupShow }) {
                 <p>Price impact</p>
                 <Info className="form__info-icon" />
               </span>
-              <span className="form__text form__text--main">0.69%</span>
+              <span className="form__text form__text--main">{impact}%</span>
             </li>
             <li className="form__info-item">
               <span className="form__text">
@@ -294,10 +332,10 @@ export default function Swap({ walletType, userAddress, setPopupShow }) {
                 <Info className="form__info-icon" />
               </span>
               <span className="form__text form__text--main">
-                0.346 BNB ~ 167.103 $
+                {trade.amountIn * 0.0025} {trade.tokenIn.symbol}
               </span>
             </li>
-            <li className="form__info-item">
+            {/* <li className="form__info-item">
               <span className="form__text">
                 <p>Return fee</p>
                 <Info className="form__info-icon" />
@@ -305,7 +343,7 @@ export default function Swap({ walletType, userAddress, setPopupShow }) {
               <span className="form__text form__text--main">
                 135.46400 ETH ~ 167.103 $
               </span>
-            </li>
+            </li> */}
           </ul>
         </div>
       </>

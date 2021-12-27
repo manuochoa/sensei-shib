@@ -458,8 +458,18 @@ export default function Liquidity({ walletType, userAddress, setPopupShow }) {
           Connect Wallet
         </button>
       ) : addTab && allowance.tokenInAllow && allowance.tokenOutAllow ? (
-        <button onClick={handleAdd} className="button button--red button--form">
-          Add Liquidity
+        <button
+          disabled={
+            trade.amountIn >= inBalance || trade.amountOut >= outBalance
+          }
+          onClick={handleAdd}
+          className="button button--red button--form"
+        >
+          {trade.amountIn >= inBalance
+            ? `insufficient ${trade.tokenIn.symbol} funds`
+            : trade.amountOut >= outBalance
+            ? `insufficient ${trade.tokenOut.symbol} funds`
+            : "Add Liquidity"}
         </button>
       ) : addTab && !allowance.tokenInAllow ? (
         <button

@@ -10,6 +10,7 @@ export default function Form({ trade, setTrade, className, title, children }) {
   const [minutes, setMinutes] = useState("");
   const [switchers, setSwitchers] = useState([false, false, false, false]);
   const [dropdownShowed, setDropdownShowed] = useState(false);
+  const [selected, setSelected] = useState(2);
 
   const setSlippage = (num) => {
     let amountOutMin = ((100 - num) * trade.amountOut) / 100;
@@ -44,13 +45,49 @@ export default function Form({ trade, setTrade, className, title, children }) {
                 <div className="dropdown__variants">
                   <ul className="dropdown__variants-list">
                     <li className="dropdown__variants-item">
-                      <button className="dropdown__button">0.1%</button>
+                      <button
+                        onClick={(e) => {
+                          setSlippage(0.1);
+                          setSelected(1);
+                        }}
+                        className={
+                          selected === 1
+                            ? "dropdown__button active"
+                            : "dropdown__button"
+                        }
+                      >
+                        0.1%
+                      </button>
                     </li>
                     <li className="dropdown__variants-item">
-                      <button className="dropdown__button active">0.5%</button>
+                      <button
+                        onClick={(e) => {
+                          setSlippage(0.5);
+                          setSelected(2);
+                        }}
+                        className={
+                          selected === 2
+                            ? "dropdown__button active"
+                            : "dropdown__button"
+                        }
+                      >
+                        0.5%
+                      </button>
                     </li>
                     <li className="dropdown__variants-item">
-                      <button className="dropdown__button">1%</button>
+                      <button
+                        onClick={(e) => {
+                          setSlippage(1);
+                          setSelected(3);
+                        }}
+                        className={
+                          selected === 3
+                            ? "dropdown__button active"
+                            : "dropdown__button"
+                        }
+                      >
+                        1%
+                      </button>
                     </li>
                   </ul>
                   <div className="input-wrapper input-wrapper--percentage">
@@ -58,7 +95,10 @@ export default function Form({ trade, setTrade, className, title, children }) {
                       // value={trade.slippage}
                       className="input-wrapper__input input dropdown__input"
                       placeholder="0.0001"
-                      onChange={(e) => setSlippage(e.target.value)}
+                      onChange={(e) => {
+                        setSelected(0);
+                        setSlippage(e.target.value);
+                      }}
                     />
                   </div>
                 </div>
