@@ -19,11 +19,15 @@
     width: 100%;
     max-width: 648px;
     max-height: calc(100vh - 185px);
-    padding: 20px 12px 24px 24px;
+    padding: 20px;
     background: rgba(32, 34, 38, 0.8);
     border: 1px solid #484545;
     backdrop-filter: blur(40px);
     border-radius: 26px;
+  }
+
+  &__container {
+    padding: 20px 12px 24px 24px;
   }
 
   &__scrollwrapper {
@@ -188,12 +192,153 @@
   &__tip--mt {
     margin-top: 12px;
   }
+
+  &__progress-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 20px;
+    height: 20px;
+
+    border-radius: 50%;
+    border: 1px solid #31bc79;
+
+    position: relative;
+  }
+
+  &__progress-icon {
+    color: #31bc79;
+  }
+
+  &__progress-item.empty &__progress-wrapper {
+    border-color: transparent;
+  }
+
+  &__progress-item.empty &__progress-wrapper:before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  &__progress {
+    display: flex;
+    padding-bottom: 24px;
+  }
+
+  &__progress-item:not(:last-child) {
+    width: 33%;
+  }
+
+  &__progress-percentage {
+    color: #ffffff;
+    position: absolute;
+    top: calc(100% + 10px);
+  }
+
+  &__progress-item.empty &__progress-percentage {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  &__progress-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  &__progress-item:before {
+    content: "";
+    width: calc(100% - 44px);
+    height: 1px;
+    background: #484545;
+    position: absolute;
+    left: 32px;
+  }
+
+  &__progress-item.done:before {
+    background: #31bc79;
+  }
+
+  &__collected {
+    margin-top: 14px;
+  }
+
+  &__collected-row {
+    display: flex;
+    justify-content: space-between;
+    color: #ffffff;
+  }
+
+  &__collected-bar {
+    width: 100%;
+    height: 6px;
+    margin-top: 10px;
+
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 100px;
+    position: relative;
+  }
+
+  &__collected-track {
+    height: 100%;
+    position: absolute;
+    background: #e72d2d;
+    border-radius: 100px;
+  }
+}
+
+.form {
+  &--allocation {
+    height: 100%;
+    padding-top: 29px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &--allocation &__wrapper {
+    max-width: 600px;
+    height: calc(100vh - 183px);
+    max-height: 707px;
+  }
+
+  &--allocation &__container--top {
+    height: 84px;
+    padding-top: 22px;
+    padding-bottom: 16px;
+    padding-right: 24px;
+  }
+
+  &--allocation &__container--bottom {
+    height: calc(100% - 85px);
+
+    padding-top: 31px;
+    padding-bottom: 32px;
+  }
+
+  &--allocation &__container--top {
+    border-bottom: 1px solid #484545;
+  }
+
+  &--allocation &__top {
+    display: block;
+    margin-bottom: 25px;
+  }
+
+  &--allocation &__scrollwrapper {
+    height: calc(100% - 90px);
+  }
 }
 
 @media (hover: none) and (pointer: coarse) {
   .form {
-    &__wrapper {
+    &__container {
       padding-right: 24px;
+    }
+
+    &__top {
+      padding-right: 0;
     }
   }
 }
@@ -211,7 +356,7 @@
 
 @media (max-width: 619px) {
   .form {
-    &__wrapper {
+    &__container {
       padding: 20px 8px 8px 16px;
     }
 
@@ -230,7 +375,6 @@
 
     &__top {
       margin-bottom: 3px;
-      padding-right: 8px;
     }
 
     &__text--mb {
@@ -270,6 +414,29 @@
     &__tab-button {
       font-size: 12px;
     }
+
+    &__progress-percentage {
+      font-size: 12px;
+    }
+
+    &__progress-wrapper {
+      width: 16px;
+      height: 16px;
+    }
+
+    &__progress-icon {
+      width: 7px;
+    }
+
+    &__progress-item:before {
+      width: calc(100% - 30px);
+      left: 23px;
+    }
+
+    &__collected-bar {
+      margin-top: 8px;
+      height: 4px;
+    }
   }
 
   .form {
@@ -277,25 +444,38 @@
       margin-bottom: 10px;
     }
   }
-}
 
-@media (hover: none) and (pointer: coarse) and (max-width: 619px) {
   .form {
-    &__wrapper {
-      padding-right: 16px;
+    &--allocation {
+      justify-content: flex-start;
+    }
+
+    &--allocation &__container--top {
+      height: 68px;
+      padding-top: 16px;
+    }
+
+    &--allocation &__top {
+      margin-bottom: 20px;
+    }
+
+    &--allocation &__container--bottom {
+      height: calc(100% - 60px);
+      padding-top: 20px;
+      padding-bottom: 15px;
+    }
+
+    &--allocation &__wrapper {
+      height: calc(100vh - 180px);
+      max-height: 524px;
     }
   }
 }
 
-.remove-liquidity-max {
-  color: red;
-  background: #202226;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  border-color: #484545;
-  padding: 5px;
-}
-
-.remove-liquidity-max:hover {
-  cursor: pointer;
+@media (hover: none) and (pointer: coarse) and (max-width: 619px) {
+  .form {
+    &__container {
+      padding-right: 16px;
+    }
+  }
 }

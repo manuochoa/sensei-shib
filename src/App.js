@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Swap from "./components/Swap";
 import Liquidity from "./components/Liquidity";
 import ConnectPopup from "./components/ConnectPopup";
+import Allocation from "./components/Allocation/Allocation";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3 from "web3";
 
@@ -109,6 +110,9 @@ function App() {
               userAddress={userAddress}
               setPopupShow={setPopupShow}
             />
+          </Route>
+          <Route path="/allocation" exact>
+            <Allocation />
           </Route>
         </Switch>
       </main>

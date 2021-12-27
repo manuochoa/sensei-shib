@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 const menu = [
   { title: "Swap", to: "/swap", id: 0 },
   { title: "Liquidity", to: "/liquidity", id: 1 },
+  { title: "Allocation", to: "/allocation", id: 2 },
 ];
 
 export default function Header({
