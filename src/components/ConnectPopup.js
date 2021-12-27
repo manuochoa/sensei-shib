@@ -29,12 +29,12 @@ export default function ConnectPopup({
             <img src={metamask} alt="metamask" className="popup__button-icon" />
           </button>
         </li>
-        <li className="popup__item">
+        {/* <li className="popup__item">
           <button className="popup__button">
             <span>Binance Chain Wallet</span>
             <img src={bsc} alt="metamask" className="popup__button-icon" />
           </button>
-        </li>
+        </li> */}
         <li className="popup__item">
           <button onClick={connectWalletConnect} className="popup__button">
             <span>WalletConnect</span>
