@@ -55,7 +55,7 @@ export default function Form({ trade, setTrade, className, title, children }) {
                   </ul>
                   <div className="input-wrapper input-wrapper--percentage">
                     <NumberFormat
-                      value={trade.slippage}
+                      // value={trade.slippage}
                       className="input-wrapper__input input dropdown__input"
                       placeholder="0.0001"
                       onChange={(e) => setSlippage(e.target.value)}

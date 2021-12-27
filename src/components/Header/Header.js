@@ -10,7 +10,12 @@ const menu = [
   { title: "Liquidity", to: "/liquidity", id: 1 },
 ];
 
-export default function Header({ popupShow, setPopupShow, userAddress }) {
+export default function Header({
+  popupShow,
+  setPopupShow,
+  userAddress,
+  setUserAddress,
+}) {
   const [accounts] = useState([""]);
   const location = useLocation();
   const [mobileScreen, setMobileScreen] = useState(false);
@@ -70,6 +75,7 @@ export default function Header({ popupShow, setPopupShow, userAddress }) {
                 "button button--header button--red" +
                 (popupShow ? " active" : "")
               }
+              onClick={() => setUserAddress("")}
             >
               <span>
                 {userAddress.slice(0, 6)}...{userAddress.slice(-10)}

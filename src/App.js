@@ -1,8 +1,8 @@
+import { useState, useEffect } from "react";
 import Header from "./components/Header/Header";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Swap from "./components/Swap";
 import Liquidity from "./components/Liquidity";
-import { useState } from "react";
 import ConnectPopup from "./components/ConnectPopup";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3 from "web3";
@@ -21,6 +21,8 @@ function App() {
 
       setUserAddress(accounts[0]);
       setWalletType("Metamask");
+
+      window.localStorage.setItem("userAddress", accounts[0]);
 
       const chainId = await window.ethereum.request({
         method: "eth_chainId",
@@ -74,11 +76,21 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    let user = window.localStorage.getItem("userAddress");
+    console.log(user, "user");
+
+    if (user) {
+      connectMetamask();
+    }
+  }, []);
+
   return (
     <>
       <Header
         userAddress={userAddress}
         popupShow={popupShow}
+        setUserAddress={setUserAddress}
         setPopupShow={setPopupShow}
       />
       <main className="main">
@@ -92,7 +104,11 @@ function App() {
             />
           </Route>
           <Route path="/liquidity" exact>
-            <Liquidity />
+            <Liquidity
+              walletType={walletType}
+              userAddress={userAddress}
+              setPopupShow={setPopupShow}
+            />
           </Route>
         </Switch>
       </main>

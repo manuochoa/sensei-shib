@@ -3,6 +3,7 @@ import ContratInterface, {
   contractAddress,
 } from "../interface/routertInterface";
 import tokenInterface from "../interface/tokenInterface";
+import factoryInterface from "../interface/factoryInterface";
 import ABI from "../abi/router.json";
 import Web3 from "web3";
 
@@ -98,9 +99,14 @@ export const getQuote = async (amount, path, walletType, quoteType) => {
 export const Approve = async (walletType, userAddress, address) => {
   try {
     let myContract = await tokenInterface(walletType, address);
-    let amount = web3.utils.toWei("999999999999999999");
+    let amount = web3.utils.toWei(
+      "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+    );
     let receipt = await myContract.methods
-      .approve(contractAddress, amount)
+      .approve(
+        contractAddress,
+        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+      )
       .send({ from: userAddress });
 
     return receipt;
@@ -126,6 +132,7 @@ export const checkBalance = async (walletType, userAddress, address) => {
   try {
     let myContract = await tokenInterface(walletType, address);
     let receipt = await myContract.methods.balanceOf(userAddress).call();
+    console.log(walletType, userAddress, address, receipt, "funct");
 
     return receipt;
   } catch (error) {
@@ -141,4 +148,125 @@ export const getNativeBalance = async (userAddress) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+// liquidity functions
+
+export const getPair = async (tokenA, tokenB, walletType) => {
+  let myContract = await factoryInterface(walletType);
+  let pairAddress = await myContract.methods.getPair(tokenA, tokenB).call();
+  let pairContract = await tokenInterface(walletType, pairAddress);
+  // tokenA = await pairContract.methods.token0().call();
+  // tokenB = await pairContract.methods.token1().call();
+  let tokenAcontract = await tokenInterface(walletType, tokenA);
+  let tokenBcontract = await tokenInterface(walletType, tokenB);
+  let supply = await pairContract.methods.totalSupply().call();
+  let tokenAreserve = await tokenAcontract.methods
+    .balanceOf(pairAddress)
+    .call();
+  let tokenBreserve = await tokenBcontract.methods
+    .balanceOf(pairAddress)
+    .call();
+
+  return { pairAddress, tokenAreserve, tokenBreserve, supply };
+};
+
+export const addLiquidity = async (
+  tokenA,
+  tokenB,
+  amountADesired,
+  amountBDesired,
+  userAddress,
+  walletType
+) => {
+  let myContract = await ContratInterface(walletType);
+  let receipt = myContract.methods
+    .addLiquidity(
+      tokenA,
+      tokenB,
+      amountADesired,
+      amountBDesired,
+      "0",
+      "0",
+      userAddress,
+      Date.now() + 1000 * 60 * 10
+    )
+    .send({ from: userAddress });
+
+  console.log(receipt);
+};
+
+export const addLiquidityETH = async (
+  tokenA,
+  amountADesired,
+  amountBDesired,
+  userAddress,
+  walletType
+) => {
+  let myContract = await ContratInterface(walletType);
+
+  let receipt = myContract.methods
+    .addLiquidityETH(
+      tokenA,
+      amountADesired,
+      "0",
+      "0",
+      userAddress,
+      Date.now() + 1000 * 60 * 10
+    )
+    .send({ from: userAddress, value: amountBDesired });
+
+  console.log(receipt);
+};
+
+export const removeLiquidity = async (
+  tokenA,
+  tokenB,
+  liquidity,
+  userAddress,
+  walletType
+) => {
+  let myContract = await ContratInterface(walletType);
+
+  let receipt = await myContract.methods
+    .removeLiquidity(
+      tokenA,
+      tokenB,
+      liquidity.toString(),
+      "0",
+      "0",
+      userAddress,
+      Date.now() + 1000 * 60 * 10
+    )
+    .send({ from: userAddress });
+
+  console.log(receipt);
+};
+
+export const removeLiquidityETH = async (
+  tokenA,
+  liquidity,
+  userAddress,
+  walletType
+) => {
+  let myContract = await ContratInterface(walletType);
+
+  // console.log("remove liquidity", {
+  //   tokenA,
+  //   liquidity: liquidity,
+  //   true: "76064724769547085",
+  //   userAddress,
+  // });
+  let receipt = await myContract.methods
+    .removeLiquidityETH(
+      tokenA,
+      liquidity.toString(),
+      "0",
+      "0",
+      userAddress,
+      Date.now() + 1000 * 60 * 10
+    )
+    .send({ from: userAddress });
+
+  console.log(receipt);
 };

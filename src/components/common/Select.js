@@ -11,8 +11,8 @@ export default function Select({
 }) {
   const [selectList, setSelectList] = useState(list);
   const [opened, setOpened] = useState(false);
-  let selectedTitle = selectList.find((item) => item.selected === true).symbol;
-  let SelectedIcon = selectList.find((item) => item.selected === true).logoURI;
+  // let selectedTitle = selectList.find((item) => item.selected === true).symbol;
+  // let SelectedIcon = selectList.find((item) => item.selected === true).logoURI;
 
   function selectItem(index) {
     console.log(index, selectList[index]);
