@@ -1,6 +1,6 @@
 import lock from "../../img/svg/lock.svg";
 
-export default function AllocationCard({ item, stage, claimStage }) {
+export default function AllocationCard({ item, stage, claimStage, isLoading }) {
   return (
     <div
       className={
@@ -30,10 +30,11 @@ export default function AllocationCard({ item, stage, claimStage }) {
       </div>
       {item.state === "ready" && (
         <button
+          disabled={isLoading}
           onClick={() => claimStage(stage)}
           className="button button--red card__button"
         >
-          Claim
+          {isLoading ? "Claiming..." : "Claim"}
         </button>
       )}
     </div>

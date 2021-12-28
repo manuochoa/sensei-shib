@@ -6,6 +6,7 @@ import { checkAllocationStatus, claim } from "../../blockchain/exchange";
 export default function Allocation({ walletType, userAddress }) {
   const [userAllocation, setUserAllocation] = useState("0");
   const [userAllocationClaimed, setUserAllocationClaimed] = useState("1");
+  const [isLoading, setIsLoading] = useState(false);
   const [stagesCollected, setStagesCollected] = useState(0);
   const [progress, setProgress] = useState([
     { state: "", percentage: 25, id: 0 },
@@ -81,11 +82,13 @@ export default function Allocation({ walletType, userAddress }) {
   };
 
   const claimStage = async (stage) => {
+    setIsLoading(true);
     let receipt = await claim(stage, userAddress, walletType);
     if (receipt) {
       getAllocationDetails();
       console.log(receipt);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -149,6 +152,7 @@ export default function Allocation({ walletType, userAddress }) {
                       claimStage={claimStage}
                       item={item}
                       stage={index}
+                      isLoading={isLoading}
                     />
                   </li>
                 );
