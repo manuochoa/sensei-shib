@@ -29,21 +29,21 @@ export default function Allocation({ walletType, userAddress }) {
       const temp = progress;
       const tempCard = cards;
       const startTime = new Date(result.startTime * 1000).toString().split(" ");
-      const firstRelease = new Date(result.startTime * 1000 + 604800000)
+      const firstRelease = new Date(result.startTime * 1000 + 600000)
         .toString()
         .split(" ");
-      const secondRelease = new Date(result.startTime * 1000 + 604800000 * 2)
+      const secondRelease = new Date(result.startTime * 1000 + 600000 * 2)
         .toString()
         .split(" ");
-      const thirdRelease = new Date(result.startTime * 1000 + 604800000 * 3)
+      const thirdRelease = new Date(result.startTime * 1000 + 600000 * 3)
         .toString()
         .split(" ");
       console.log(startTime.toString().split(" "));
 
-      tempCard[0].date = `${startTime[1]} ${startTime[2]}, ${startTime[3]}`;
-      tempCard[1].date = `${firstRelease[1]} ${firstRelease[2]}, ${firstRelease[3]}`;
-      tempCard[2].date = `${secondRelease[1]} ${secondRelease[2]}, ${secondRelease[3]}`;
-      tempCard[3].date = `${thirdRelease[1]} ${thirdRelease[2]}, ${thirdRelease[3]}`;
+      tempCard[0].date = `${startTime[1]} ${startTime[2]}, ${startTime[3]}, ${startTime[4]}`;
+      tempCard[1].date = `${firstRelease[1]} ${firstRelease[2]}, ${firstRelease[3]}, ${firstRelease[4]}`;
+      tempCard[2].date = `${secondRelease[1]} ${secondRelease[2]}, ${secondRelease[3]}, ${secondRelease[4]}`;
+      tempCard[3].date = `${thirdRelease[1]} ${thirdRelease[2]}, ${thirdRelease[3]}, ${thirdRelease[4]}`;
       if (result) {
         let claimed = 0;
         result.stages.map((el, index) => {
@@ -55,7 +55,7 @@ export default function Allocation({ walletType, userAddress }) {
             temp[index].state = "";
             tempCard[index].state = "";
 
-            if (Date.now() > startTime * 1000 + 604800000 * index) {
+            if (Date.now() > startTime * 1000 + 600000 * index) {
               temp[index].state = "active";
               tempCard[index].state = "ready";
             }
@@ -74,8 +74,10 @@ export default function Allocation({ walletType, userAddress }) {
 
   const claimStage = async (stage) => {
     let receipt = await claim(stage, userAddress, walletType);
-
-    console.log(receipt);
+    if (receipt) {
+      getAllocationDetails();
+      console.log(receipt);
+    }
   };
 
   useEffect(() => {

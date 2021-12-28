@@ -273,31 +273,41 @@ export const removeLiquidityETH = async (
 };
 
 export const checkAllocationStatus = async (userAddress, walletType) => {
-  console.log(userAddress, "user here");
-  let myContract = await allocationInterface(walletType);
+  try {
+    console.log(userAddress, "user here");
+    let myContract = await allocationInterface(walletType);
 
-  let userAllocation = await myContract.methods
-    .userAllocation(userAddress)
-    .call();
-  let startTime = await myContract.methods.startTime().call();
-  let stages = [];
-  for (let i = 0; i < 4; i++) {
-    stages[i] = await myContract.methods.isStageClaimed(userAddress, i).call();
+    let userAllocation = await myContract.methods
+      .userAllocation(userAddress)
+      .call();
+    let startTime = await myContract.methods.startTime().call();
+    let stages = [];
+    for (let i = 0; i < 4; i++) {
+      stages[i] = await myContract.methods
+        .isStageClaimed(userAddress, i)
+        .call();
+    }
+
+    console.log(stages, "stages", userAllocation, startTime);
+    return { stages, userAllocation, startTime };
+  } catch (error) {
+    console.log(error);
   }
-
-  console.log(stages, "stages", userAllocation, startTime);
-  return { stages, userAllocation, startTime };
 };
 
 export const claim = async (stage, userAddress, walletType) => {
-  let myContract = await allocationInterface(walletType);
+  try {
+    let myContract = await allocationInterface(walletType);
 
-  let receipt = await myContract.methods
-    .claim(stage)
-    .send({ from: userAddress });
+    let receipt = await myContract.methods
+      .claim(stage)
+      .send({ from: userAddress });
 
-  console.log(receipt);
-  return receipt;
+    console.log(receipt);
+    return receipt;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // isStageClaimed
