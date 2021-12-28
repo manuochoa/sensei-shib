@@ -55,9 +55,17 @@ export default function Allocation({ walletType, userAddress }) {
             temp[index].state = "";
             tempCard[index].state = "";
 
-            if (Date.now() > startTime * 1000 + 600000 * index) {
+            console.log(
+              Date.now() > result.startTime * 1000 + 600000 * index,
+              Date.now(),
+              result.startTime * 1000 + 600000 * index,
+              result.startTime,
+              "time"
+            );
+            if (Date.now() > result.startTime * 1000 + 600000 * index) {
               temp[index].state = "active";
               tempCard[index].state = "ready";
+              console.log("active");
             }
           }
         });
