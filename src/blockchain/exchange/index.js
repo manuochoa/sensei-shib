@@ -301,13 +301,13 @@ export const claim = async (stage, userAddress, walletType) => {
 
     let receipt = await myContract.methods
       .claim(stage)
-      .send({ from: userAddress });
+      .send({ from: userAddress, gas: 150000 });
 
     console.log(receipt);
     return receipt;
   } catch (error) {
     console.log(error);
-    window.alert(error);
+    window.alert(`${error}`);
   }
 };
 
