@@ -59,7 +59,7 @@ function App() {
           97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
         },
         network: "binance",
-        chainId: 56,
+        chainId: 97,
         infuraId: null,
       });
 
