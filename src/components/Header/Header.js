@@ -16,6 +16,7 @@ export default function Header({
   setPopupShow,
   userAddress,
   setUserAddress,
+  disconnectWallet,
 }) {
   const [accounts] = useState([""]);
   const location = useLocation();
@@ -76,7 +77,7 @@ export default function Header({
                 "button button--header button--red" +
                 (popupShow ? " active" : "")
               }
-              onClick={() => setUserAddress("")}
+              onClick={() => disconnectWallet()}
             >
               <span>
                 {userAddress.slice(0, 6)}...{userAddress.slice(-10)}

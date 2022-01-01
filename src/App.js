@@ -79,6 +79,26 @@ function App() {
     }
   };
 
+  const disconnectWallet = async () => {
+    if (walletType === "Trust_wallet") {
+      const provider = new WalletConnectProvider({
+        rpc: {
+          //56: "https://bsc-dataseed.binance.org/",
+
+          97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+        },
+        network: "binance testnet",
+        chainId: 97,
+        infuraId: null,
+      });
+      await provider.disconnect();
+    } else {
+      window.localStorage.removeItem("userAddress");
+    }
+
+    setUserAddress("");
+  };
+
   useEffect(() => {
     let user = window.localStorage.getItem("userAddress");
     console.log(user, "user");
@@ -95,6 +115,7 @@ function App() {
         popupShow={popupShow}
         setUserAddress={setUserAddress}
         setPopupShow={setPopupShow}
+        disconnectWallet={disconnectWallet}
       />
       <main className="main">
         <Switch>
