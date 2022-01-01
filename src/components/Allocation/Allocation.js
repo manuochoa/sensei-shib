@@ -135,7 +135,7 @@ export default function Allocation({ walletType, userAddress }) {
             <h1 className="form__title">Token Allocation</h1>
             <div className="form__collected">
               <div className="form__collected-row">
-                <span>{stagesCollected * 25}% Collected</span>
+                <span>{stagesCollected * 10}% Collected</span>
                 <span>
                   {userAllocationClaimed}/{userAllocation}
                 </span>
@@ -143,7 +143,7 @@ export default function Allocation({ walletType, userAddress }) {
               <div className="form__collected-bar">
                 <div
                   className="form__collected-track"
-                  style={{ width: `${stagesCollected * 25}` }}
+                  style={{ width: `${stagesCollected * 10}` }}
                 ></div>
               </div>
             </div>
