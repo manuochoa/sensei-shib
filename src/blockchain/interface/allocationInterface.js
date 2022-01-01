@@ -21,7 +21,6 @@ async function allocationInterface(walletType) {
     await provider.enable();
 
     web3 = new Web3(provider);
-    return new web3.eth.Contract(ABI.abi, contractAddress);
   } else if (walletType === "Metamask") {
     const provider = await detectEthereumProvider();
     web3 = new Web3(provider);

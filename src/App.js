@@ -55,10 +55,11 @@ function App() {
     try {
       const provider = new WalletConnectProvider({
         rpc: {
-          56: "https://bsc-dataseed.binance.org/",
+          //56: "https://bsc-dataseed.binance.org/",
+
           97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
         },
-        network: "binance",
+        network: "binance testnet",
         chainId: 97,
         infuraId: null,
       });

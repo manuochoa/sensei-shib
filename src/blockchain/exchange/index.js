@@ -307,6 +307,7 @@ export const claim = async (stage, userAddress, walletType) => {
     return receipt;
   } catch (error) {
     console.log(error);
+    window.alert(error);
   }
 };
 
