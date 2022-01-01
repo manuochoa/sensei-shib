@@ -310,6 +310,8 @@ export const claim = async (stage, userAddress, walletType) => {
   } catch (error) {
     console.log(error);
     window.alert(`${error}`);
+    window.alert(`${error.message}`);
+    window.alert(`${error.data?.message}`);
   }
 };
 
