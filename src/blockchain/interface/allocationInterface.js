@@ -13,10 +13,13 @@ async function allocationInterface(walletType) {
   if (walletType === "Trust_wallet") {
     const provider = new WalletConnectProvider({
       rpc: {
+        //56: "https://bsc-dataseed.binance.org/",
+
         97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
-        // 56: "https://bsc-dataseed1.binance.org",
-        // 56: "https://speedy-nodes-nyc.moralis.io/1d19a6082204e3ecd8dcf0b9/bsc/mainnet",
       },
+      network: "binance testnet",
+      chainId: 97,
+      infuraId: null,
     });
     await provider.enable();
 
