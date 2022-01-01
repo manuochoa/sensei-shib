@@ -22,7 +22,7 @@ async function allocationInterface(walletType) {
     web3 = new Web3(provider);
     return new web3.eth.Contract(ABI.abi, contractAddress);
   } else if (walletType === "Metamask") {
-    web3 = new Web3(Web3.givenProvider);
+    web3 = new Web3(Web3.givenProvider || window.ethereum);
   } else {
     const provider = new Web3.providers.HttpProvider(
       "https://data-seed-prebsc-1-s1.binance.org:8545/"
