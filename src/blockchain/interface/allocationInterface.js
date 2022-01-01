@@ -1,6 +1,7 @@
 // import web3 from "../web3";
 import ABI from "../abi/allocation.json";
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import detectEthereumProvider from "@metamask/detect-provider";
 
 const Web3 = require("web3");
 
@@ -22,7 +23,8 @@ async function allocationInterface(walletType) {
     web3 = new Web3(provider);
     return new web3.eth.Contract(ABI.abi, contractAddress);
   } else if (walletType === "Metamask") {
-    web3 = new Web3(window.ethereum);
+    const provider = await detectEthereumProvider();
+    web3 = new Web3(provider);
   } else {
     const provider = new Web3.providers.HttpProvider(
       "https://data-seed-prebsc-1-s1.binance.org:8545/"
