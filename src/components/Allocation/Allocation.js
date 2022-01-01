@@ -9,17 +9,25 @@ export default function Allocation({ walletType, userAddress }) {
   const [isLoading, setIsLoading] = useState(false);
   const [stagesCollected, setStagesCollected] = useState(0);
   const [progress, setProgress] = useState([
-    { state: "", percentage: 25, id: 0 },
-    { state: "", percentage: 50, id: 1 },
-    { state: "", percentage: 75, id: 2 },
+    { state: "", percentage: 30, id: 0 },
+    { state: "", percentage: 40, id: 1 },
+    { state: "", percentage: 50, id: 2 },
+    { state: "", percentage: 60, id: 3 },
+    { state: "", percentage: 70, id: 3 },
+    { state: "", percentage: 80, id: 3 },
+    { state: "", percentage: 90, id: 3 },
     { state: "", percentage: 100, id: 3 },
   ]);
 
   const [cards, setCards] = useState([
-    { title: "Level 1 (25%)", state: "", date: "", id: 0 },
-    { title: "Level 2 (50%)", state: "", date: "", id: 1 },
-    { title: "Level 3 (75%)", state: "", date: "", id: 2 },
-    { title: "Level 4 (100%)", state: "", date: "", id: 3 },
+    { title: "Level 1 (30%)", state: "", date: "", id: 0 },
+    { title: "Level 2 (40%)", state: "", date: "", id: 1 },
+    { title: "Level 3 (50%)", state: "", date: "", id: 2 },
+    { title: "Level 4 (60%)", state: "", date: "", id: 3 },
+    { title: "Level 5 (70%)", state: "", date: "", id: 4 },
+    { title: "Level 6 (80%)", state: "", date: "", id: 5 },
+    { title: "Level 7 (90%)", state: "", date: "", id: 6 },
+    { title: "Level 8 (100%)", state: "", date: "", id: 7 },
   ]);
 
   const getAllocationDetails = async () => {
@@ -29,29 +37,26 @@ export default function Allocation({ walletType, userAddress }) {
 
       const temp = progress;
       const tempCard = cards;
-      const startTime = new Date(result.startTime * 1000).toString().split(" ");
-      const firstRelease = new Date(result.startTime * 1000 + 600000)
-        .toString()
-        .split(" ");
-      const secondRelease = new Date(result.startTime * 1000 + 600000 * 2)
-        .toString()
-        .split(" ");
-      const thirdRelease = new Date(result.startTime * 1000 + 600000 * 3)
-        .toString()
-        .split(" ");
-      console.log(startTime.toString().split(" "));
+      tempCard.map((el, index) => {
+        const startTime = new Date(result.startTime * 1000 + 600000 * index)
+          .toString()
+          .split(" ");
+        tempCard[
+          index
+        ].date = `${startTime[1]} ${startTime[2]}, ${startTime[3]}, ${startTime[4]}`;
+      });
 
-      tempCard[0].date = `${startTime[1]} ${startTime[2]}, ${startTime[3]}, ${startTime[4]}`;
-      tempCard[1].date = `${firstRelease[1]} ${firstRelease[2]}, ${firstRelease[3]}, ${firstRelease[4]}`;
-      tempCard[2].date = `${secondRelease[1]} ${secondRelease[2]}, ${secondRelease[3]}, ${secondRelease[4]}`;
-      tempCard[3].date = `${thirdRelease[1]} ${thirdRelease[2]}, ${thirdRelease[3]}, ${thirdRelease[4]}`;
       if (result) {
         let claimed = 0;
         result.stages.map((el, index) => {
           if (el === true) {
+            if (index === 0) {
+              claimed = claimed + 3;
+            } else {
+              claimed++;
+            }
             temp[index].state = "done";
             tempCard[index].state = "active";
-            claimed++;
           } else {
             temp[index].state = "";
             tempCard[index].state = "";
@@ -73,7 +78,7 @@ export default function Allocation({ walletType, userAddress }) {
         console.log(temp);
         let allocation = (result.userAllocation / 10 ** 18).toFixed(2);
         setUserAllocation(allocation);
-        setUserAllocationClaimed((allocation / 4) * claimed);
+        setUserAllocationClaimed((allocation / 10) * claimed);
         setStagesCollected(claimed);
       }
       setCards(tempCard);
