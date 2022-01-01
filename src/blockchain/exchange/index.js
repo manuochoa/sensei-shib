@@ -298,12 +298,10 @@ export const checkAllocationStatus = async (userAddress, walletType) => {
 export const claim = async (stage, userAddress, walletType) => {
   try {
     let myContract = await allocationInterface(walletType);
-    let gasPrice = await web3.eth.getGasPrice();
-    console.log(gasPrice.toString());
 
     let receipt = await myContract.methods
       .claim(stage)
-      .send({ from: userAddress, gas: 150000, gasPrice });
+      .send({ from: userAddress, gas: 150000 });
 
     console.log(receipt);
     return receipt;
