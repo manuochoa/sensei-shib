@@ -23,12 +23,12 @@ const menu = [
   {
     title: "Earn",
     id: 2,
-    submenu: [{ title: "Soon...", to: "/", id: 0, disabled: false }],
+    submenu: [{ title: "Coming Soon...", to: "#", id: 0, disabled: false }],
   },
   {
     title: "NFT",
     id: 3,
-    submenu: [{ title: "Soon...", to: "/", id: 0, disabled: false }],
+    submenu: [{ title: "Coming Soon...", to: "#", id: 0, disabled: false }],
   },
 ];
 
@@ -43,6 +43,7 @@ export default function Header({
   const location = useLocation();
   const [mobileScreen, setMobileScreen] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
+  const [subMenuVisible, setSubMenuVisible] = useState();
 
   function checkUrl(url) {
     let current_path = location.pathname;
@@ -70,41 +71,71 @@ export default function Header({
           <img src={logo} alt="logo" className="header__logo-image" />
         </Link>
         <ul className={"header__menu" + (menuVisible ? " opened" : "")}>
-          {menu.map((item) => {
+          {menu.map((item, index) => {
             return (
               <li className="header__menu-item" key={item.id}>
-                <Popup
-                  key={`tp-${item.id}`}
-                  trigger={
-                    <button type="button" className="button">
-                      {item.title}
-                    </button>
-                  }
-                  position={"bottom center"}
-                  on={["hover", "focus"]}
-                  arrow={false}
-                >
-                  <div className="popup-body">
-                    {item.submenu.map((el, i) => {
-                      return (
-                        <Link
-                          to={el.to}
-                          className={
-                            "header__menu-link" +
-                            (checkUrl(el.to) ? " active" : "")
-                          }
-                          onClick={
-                            mobileScreen
-                              ? () => setMenuVisible(!menuVisible)
-                              : () => false
-                          }
-                        >
-                          {el.title}
-                        </Link>
-                      );
-                    })}
+                {mobileScreen ? (
+                  <div onClick={() => setSubMenuVisible(index)}>
+                    <h1>{item.title}</h1>
+                    <div
+                      className={
+                        subMenuVisible === index ? "submenu active" : "submenu"
+                      }
+                    >
+                      {item.submenu.map((el, i) => {
+                        return (
+                          <Link
+                            to={el.to}
+                            className={
+                              "header__menu-link" +
+                              (checkUrl(el.to) ? " active" : "")
+                            }
+                            onClick={
+                              mobileScreen
+                                ? () => setMenuVisible(!menuVisible)
+                                : () => false
+                            }
+                          >
+                            {el.title}
+                          </Link>
+                        );
+                      })}
+                    </div>
                   </div>
-                </Popup>
+                ) : (
+                  <Popup
+                    key={`tp-${item.id}`}
+                    trigger={
+                      <button type="button" className="button">
+                        {item.title}
+                      </button>
+                    }
+                    position={"bottom center"}
+                    on={["hover", "focus"]}
+                    arrow={false}
+                  >
+                    <div className="popup-body">
+                      {item.submenu.map((el, i) => {
+                        return (
+                          <Link
+                            to={el.to}
+                            className={
+                              "header__menu-link" +
+                              (checkUrl(el.to) ? " active" : "")
+                            }
+                            onClick={
+                              mobileScreen
+                                ? () => setMenuVisible(!menuVisible)
+                                : () => false
+                            }
+                          >
+                            {el.title}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </Popup>
+                )}
                 {/* <button disabled={item.disabled}>
                   <Link
                     to={item.to}
@@ -125,7 +156,12 @@ export default function Header({
           })}
         </ul>
         <div className="header__wrapper-inner">
-          {/* <input value="$1.03" className="input header__input" readOnly /> */}
+          <input
+            value=""
+            className="input header__input price-input"
+            readOnly
+          />
+          {/* <div></div> */}
           {userAddress !== "" ? (
             <button
               className={

@@ -33,7 +33,7 @@ export default function Allocation({ walletType, userAddress }) {
       const temp = progress;
       const tempCard = cards;
       tempCard.map((el, index) => {
-        const startTime = new Date(result.startTime * 1000 + 600000 * index)
+        const startTime = new Date(result.startTime * 1000 + 604800000 * index)
           .toString()
           .split(" ");
         tempCard[
@@ -57,13 +57,13 @@ export default function Allocation({ walletType, userAddress }) {
             tempCard[index].state = "";
 
             console.log(
-              Date.now() > result.startTime * 1000 + 600000 * index,
+              Date.now() > result.startTime * 1000 + 604800000 * index,
               Date.now(),
-              result.startTime * 1000 + 600000 * index,
+              result.startTime * 1000 + 604800000 * index,
               result.startTime,
               "time"
             );
-            if (Date.now() > result.startTime * 1000 + 600000 * index) {
+            if (Date.now() > result.startTime * 1000 + 604800000 * index) {
               temp[index].state = "active";
               tempCard[index].state = "ready";
               console.log("active");
