@@ -5,7 +5,7 @@ import detectEthereumProvider from "@metamask/detect-provider";
 
 const Web3 = require("web3");
 
-export const contractAddress = "0xC71639fF06E6232F27e929FE4deA4585adc41504";
+export const contractAddress = "0x0b836d21d35F799F6d947F4Ed1986aE8dd4F4D1a";
 
 async function allocationInterface(walletType) {
   let web3;

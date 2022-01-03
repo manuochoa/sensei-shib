@@ -3,12 +3,33 @@ import { Link } from "react-router-dom";
 import logo from "../../img/common/logo.png";
 import More from "./../../icons/More";
 import Docs from "./../../icons/Docs";
+import Popup from "reactjs-popup";
 import { useLocation } from "react-router-dom";
 
 const menu = [
-  { title: "Swap", to: "/swap", id: 0 },
-  { title: "Liquidity", to: "/liquidity", id: 1 },
-  { title: "Allocation", to: "/allocation", id: 2 },
+  {
+    title: "Trade",
+    id: 0,
+    submenu: [
+      { title: "Exchange", to: "/swap", id: 0, disabled: false },
+      { title: "Liquidity", to: "/liquidity", id: 1, disabled: false },
+    ],
+  },
+  {
+    title: "Vesting",
+    id: 1,
+    submenu: [{ title: "Vesting", to: "/vesting", id: 0, disabled: false }],
+  },
+  {
+    title: "Earn",
+    id: 2,
+    submenu: [{ title: "Soon...", to: "/", id: 0, disabled: false }],
+  },
+  {
+    title: "NFT",
+    id: 3,
+    submenu: [{ title: "Soon...", to: "/", id: 0, disabled: false }],
+  },
 ];
 
 export default function Header({
@@ -52,25 +73,59 @@ export default function Header({
           {menu.map((item) => {
             return (
               <li className="header__menu-item" key={item.id}>
-                <Link
-                  to={item.to}
-                  className={
-                    "header__menu-link" + (checkUrl(item.to) ? " active" : "")
+                <Popup
+                  key={`tp-${item.id}`}
+                  trigger={
+                    <button type="button" className="button">
+                      {item.title}
+                    </button>
                   }
-                  onClick={
-                    mobileScreen
-                      ? () => setMenuVisible(!menuVisible)
-                      : () => false
-                  }
+                  position={"bottom center"}
+                  on={["hover", "focus"]}
+                  arrow={false}
                 >
-                  {item.title}
-                </Link>
+                  <div className="popup-body">
+                    {item.submenu.map((el, i) => {
+                      return (
+                        <Link
+                          to={el.to}
+                          className={
+                            "header__menu-link" +
+                            (checkUrl(el.to) ? " active" : "")
+                          }
+                          onClick={
+                            mobileScreen
+                              ? () => setMenuVisible(!menuVisible)
+                              : () => false
+                          }
+                        >
+                          {el.title}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </Popup>
+                {/* <button disabled={item.disabled}>
+                  <Link
+                    to={item.to}
+                    className={
+                      "header__menu-link" + (checkUrl(item.to) ? " active" : "")
+                    }
+                    onClick={
+                      mobileScreen
+                        ? () => setMenuVisible(!menuVisible)
+                        : () => false
+                    }
+                  >
+                    {item.title}
+                  </Link>
+                </button> */}
               </li>
             );
           })}
         </ul>
         <div className="header__wrapper-inner">
-          <input value="$1.03" className="input header__input" readOnly />
+          {/* <input value="$1.03" className="input header__input" readOnly /> */}
           {userAddress !== "" ? (
             <button
               className={

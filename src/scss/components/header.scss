@@ -205,3 +205,14 @@
     }
   }
 }
+
+.popup-body {
+  padding: 23px 24px 17px 24px;
+  background: #1b1a1a;
+  border: 1px solid #484545;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  line-height: 35px;
+  color: #ffffff;
+}

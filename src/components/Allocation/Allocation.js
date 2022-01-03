@@ -8,26 +8,21 @@ export default function Allocation({ walletType, userAddress }) {
   const [userAllocationClaimed, setUserAllocationClaimed] = useState("1");
   const [isLoading, setIsLoading] = useState(false);
   const [stagesCollected, setStagesCollected] = useState(0);
+  const [collected, setCollected] = useState(0);
   const [progress, setProgress] = useState([
-    { state: "", percentage: 30, id: 0 },
-    { state: "", percentage: 40, id: 1 },
-    { state: "", percentage: 50, id: 2 },
-    { state: "", percentage: 60, id: 3 },
-    { state: "", percentage: 70, id: 3 },
-    { state: "", percentage: 80, id: 3 },
-    { state: "", percentage: 90, id: 3 },
-    { state: "", percentage: 100, id: 3 },
+    { state: "", percentage: 40, id: 0 },
+    { state: "", percentage: 55, id: 1 },
+    { state: "", percentage: 70, id: 2 },
+    { state: "", percentage: 85, id: 3 },
+    { state: "", percentage: 100, id: 4 },
   ]);
 
   const [cards, setCards] = useState([
-    { title: "Level 1 (30%)", state: "", date: "", id: 0 },
-    { title: "Level 2 (40%)", state: "", date: "", id: 1 },
-    { title: "Level 3 (50%)", state: "", date: "", id: 2 },
-    { title: "Level 4 (60%)", state: "", date: "", id: 3 },
-    { title: "Level 5 (70%)", state: "", date: "", id: 4 },
-    { title: "Level 6 (80%)", state: "", date: "", id: 5 },
-    { title: "Level 7 (90%)", state: "", date: "", id: 6 },
-    { title: "Level 8 (100%)", state: "", date: "", id: 7 },
+    { title: "Level 1 (40%)", state: "", date: "", id: 0 },
+    { title: "Level 2 (55%)", state: "", date: "", id: 1 },
+    { title: "Level 3 (70%)", state: "", date: "", id: 2 },
+    { title: "Level 4 (85%)", state: "", date: "", id: 3 },
+    { title: "Level 5 (100%)", state: "", date: "", id: 4 },
   ]);
 
   const getAllocationDetails = async () => {

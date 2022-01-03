@@ -134,7 +134,7 @@ function App() {
               setPopupShow={setPopupShow}
             />
           </Route>
-          <Route path="/allocation" exact>
+          <Route path="/vesting" exact>
             <Allocation walletType={walletType} userAddress={userAddress} />
           </Route>
         </Switch>
