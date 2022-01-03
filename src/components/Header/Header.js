@@ -157,7 +157,7 @@ export default function Header({
         </ul>
         <div className="header__wrapper-inner">
           <input
-            value=""
+            value="$1.05"
             className="input header__input price-input"
             readOnly
           />
