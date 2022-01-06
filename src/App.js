@@ -25,16 +25,16 @@ function App() {
 
       window.localStorage.setItem("userAddress", accounts[0]);
 
-      // const chainId = await window.ethereum.request({
-      //   method: "eth_chainId",
-      // });
+      const chainId = await window.ethereum.request({
+        method: "eth_chainId",
+      });
 
-      // if (chainId !== "0x38") {
-      //   await window.ethereum.request({
-      //     method: "wallet_switchEthereumChain",
-      //     params: [{ chainId: "0x38" }],
-      //   });
-      // }
+      if (chainId !== "0x38") {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: "0x38" }],
+        });
+      }
 
       window.ethereum.on("accountsChanged", function (accounts) {
         setUserAddress(accounts[0]);
@@ -55,12 +55,12 @@ function App() {
     try {
       const provider = new WalletConnectProvider({
         rpc: {
-          //56: "https://bsc-dataseed.binance.org/",
+          56: "https://bsc-dataseed.binance.org/",
 
-          97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+          // 97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
         },
-        network: "binance testnet",
-        chainId: 97,
+        network: "binance",
+        chainId: 56,
         infuraId: null,
       });
 
@@ -83,12 +83,12 @@ function App() {
     if (walletType === "Trust_wallet") {
       const provider = new WalletConnectProvider({
         rpc: {
-          //56: "https://bsc-dataseed.binance.org/",
+          56: "https://bsc-dataseed.binance.org/",
 
-          97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+          // 97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
         },
-        network: "binance testnet",
-        chainId: 97,
+        network: "binance",
+        chainId: 56,
         infuraId: null,
       });
       await provider.disconnect();
