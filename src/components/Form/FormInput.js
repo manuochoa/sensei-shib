@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import NumberFormat from "react-number-format";
-import BNB from "./../../icons/BNB";
-import ETH from "./../../icons/ETH";
 import getInputWidth from "./../../services/getInputWidth";
 import Select from "./../common/Select";
 

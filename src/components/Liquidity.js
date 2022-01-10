@@ -11,7 +11,6 @@ import {
   addLiquidityETH,
   removeLiquidity,
   removeLiquidityETH,
-  getQuote,
   Approve,
   checkAllowance,
   checkBalance,
@@ -23,7 +22,6 @@ export default function Liquidity({ walletType, userAddress, setPopupShow }) {
   const [removeA, setRemoveA] = useState(345);
   const [removeB, setRemoveB] = useState(3.49965);
   const [percentage, setPercentage] = useState(0);
-  const [receivedValue, setRceivedValue] = useState([36.004, 446.004]);
   const [isLoading, setIsLoading] = useState(false);
   const [inBalance, setInBalance] = useState("");
   const [outBalance, setOutBalance] = useState("");
@@ -92,7 +90,7 @@ export default function Liquidity({ walletType, userAddress, setPopupShow }) {
       return 0;
     }
     if (side === "from") {
-      let { pairAddress, tokenAreserve, tokenBreserve } = await getPair(
+      let { tokenAreserve, tokenBreserve } = await getPair(
         trade.tokenIn.address,
         trade.tokenOut.address,
         walletType
@@ -102,7 +100,7 @@ export default function Liquidity({ walletType, userAddress, setPopupShow }) {
 
       return (exchangeRate / 10 ** trade.tokenIn.decimals).toFixed(4);
     } else if (side === "to") {
-      let { pairAddress, tokenAreserve, tokenBreserve } = await getPair(
+      let { tokenAreserve, tokenBreserve } = await getPair(
         trade.tokenIn.address,
         trade.tokenOut.address,
         walletType
@@ -140,22 +138,9 @@ export default function Liquidity({ walletType, userAddress, setPopupShow }) {
         rateOut: tokenBreserve / supply,
         LPAddress: pairAddress,
       });
-
-      console.log(
-        {
-          LPbalance: eth || 0,
-          rateIn: supply / tokenAreserve,
-          rateOut: supply / tokenBreserve,
-        },
-        "lp balance"
-      );
     }
 
-    console.log(tokenAreserve, tokenBreserve, "reserves", supply);
-
     const rate = tokenAreserve / tokenBreserve;
-
-    console.log(rate, "pair address", pairAddress);
 
     const exchangeRate = `${rate.toFixed(6)} ${trade.tokenIn.symbol} per ${
       trade.tokenOut.symbol
@@ -173,7 +158,6 @@ export default function Liquidity({ walletType, userAddress, setPopupShow }) {
   };
 
   const checkUserAllowance = async () => {
-    console.log("checking allowance");
     if (userAddress) {
       let LPAllowance = false;
       let tokenInAllow = 0;
@@ -210,15 +194,8 @@ export default function Liquidity({ walletType, userAddress, setPopupShow }) {
           userAddress,
           pairAddress
         );
-        console.log("allowance", allowance);
         LPAllowance = allowance > 0;
       }
-
-      console.log({
-        tokenInAllow: tokenInAllow > 0,
-        tokenOutAllow: tokenOutAllow > 0,
-        LPAllowance,
-      });
 
       setAllowance({
         tokenInAllow: tokenInAllow > 0,
@@ -362,17 +339,15 @@ export default function Liquidity({ walletType, userAddress, setPopupShow }) {
 
   useEffect(() => {
     getRemoveValues();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [percentage]);
 
   useEffect(() => {
     getUserBalance();
     getExchangeRate();
     checkUserAllowance();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trade.tokenIn, trade.tokenOut, userAddress]);
-
-  useEffect(() => {
-    console.log(trade, "trade");
-  }, [trade]);
 
   return (
     <Form
@@ -450,7 +425,7 @@ export default function Liquidity({ walletType, userAddress, setPopupShow }) {
         <p className="form__text">Current Rate</p>
         <span className="form__text form__text--main">{exchangeText}</span>
       </div>
-      {userAddress == "" ? (
+      {userAddress === "" ? (
         <button
           onClick={setPopupShow}
           className="button button--red button--form"
@@ -487,6 +462,7 @@ export default function Liquidity({ walletType, userAddress, setPopupShow }) {
         </button>
       ) : allowance.LPAllowance ? (
         <button
+          disabled={isLoading}
           onClick={handleRemove}
           className="button button--red button--form"
         >

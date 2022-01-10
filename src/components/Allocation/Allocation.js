@@ -8,7 +8,6 @@ export default function Allocation({ walletType, userAddress }) {
   const [userAllocationClaimed, setUserAllocationClaimed] = useState("1");
   const [isLoading, setIsLoading] = useState(false);
   const [stagesCollected, setStagesCollected] = useState(0);
-  const [collected, setCollected] = useState(0);
   const [progress, setProgress] = useState([
     { state: "", percentage: 40, id: 0 },
     { state: "", percentage: 55, id: 1 },
@@ -28,17 +27,26 @@ export default function Allocation({ walletType, userAddress }) {
   const getAllocationDetails = async () => {
     if (userAddress) {
       let result = await checkAllocationStatus(userAddress, walletType);
-      console.log(Date.now(), "now");
 
       const temp = progress;
       const tempCard = cards;
       tempCard.map((el, index) => {
-        const startTime = new Date(result.startTime * 1000 + 604800000 * index)
-          .toString()
-          .split(" ");
-        tempCard[
+        let startTime;
+        if (index === 0) {
+          startTime = new Date(result.startTime * 1000 + 604800000 * index)
+            .toString()
+            .split(" ");
+        } else {
+          startTime = new Date(
+            result.startTime * 1000 + 86400000 + 604800000 * index
+          )
+            .toString()
+            .split(" ");
+        }
+
+        return (tempCard[
           index
-        ].date = `${startTime[1]} ${startTime[2]}, ${startTime[3]}, ${startTime[4]}`;
+        ].date = `${startTime[1]} ${startTime[2]}, ${startTime[3]}, ${startTime[4]}`);
       });
 
       if (result) {
@@ -51,27 +59,22 @@ export default function Allocation({ walletType, userAddress }) {
               claimed++;
             }
             temp[index].state = "done";
-            tempCard[index].state = "active";
+            return (tempCard[index].state = "active");
           } else {
             temp[index].state = "";
             tempCard[index].state = "";
 
-            console.log(
-              Date.now() > result.startTime * 1000 + 604800000 * index,
-              Date.now(),
-              result.startTime * 1000 + 604800000 * index,
-              result.startTime,
-              "time"
-            );
-            if (Date.now() > result.startTime * 1000 + 604800000 * index) {
+            if (
+              Date.now() >
+              result.startTime * 1000 + 86400000 + 604800000 * index
+            ) {
               temp[index].state = "active";
               tempCard[index].state = "ready";
-              console.log("active");
             }
+            return true;
           }
         });
-        console.log(temp);
-        let allocation = (result.userAllocation / 10 ** 18).toFixed(2);
+        let allocation = (result.userAllocation / 10 ** 9).toFixed(2);
         setUserAllocation(allocation);
         setUserAllocationClaimed((allocation / 10) * claimed);
         setStagesCollected(claimed);
@@ -86,13 +89,13 @@ export default function Allocation({ walletType, userAddress }) {
     let receipt = await claim(stage, userAddress, walletType);
     if (receipt) {
       getAllocationDetails();
-      console.log(receipt);
     }
     setIsLoading(false);
   };
 
   useEffect(() => {
     getAllocationDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAddress]);
   return (
     <div className="form form--allocation container">

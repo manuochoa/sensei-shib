@@ -1,6 +1,5 @@
 import Popup from "./common/Popup";
 import metamask from "../img/svg/metamask.svg";
-import bsc from "../img/svg/bsc.png";
 import wc from "../img/svg/wc.svg";
 
 export default function ConnectPopup({

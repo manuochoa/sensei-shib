@@ -1,6 +1,4 @@
 import NumberFormat from "react-number-format";
-import BNB from "../../icons/BNB";
-import ETH from "../../icons/ETH";
 import Select from "./../common/Select";
 
 export default function FormInputReceive({
@@ -13,11 +11,6 @@ export default function FormInputReceive({
   selected1,
   selected2,
 }) {
-  const dropdownList = [
-    { title: "BNB", selected: true, icon: BNB, id: 0 },
-    { title: "ETH", selected: false, icon: ETH, id: 1 },
-  ];
-
   return (
     <div
       className={

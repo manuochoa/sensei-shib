@@ -14,7 +14,6 @@ function App() {
   const [walletType, setWalletType] = useState("");
 
   const connectMetamask = async () => {
-    console.log("hola");
     try {
       const accounts = await window.ethereum.request({
         method: "eth_requestAccounts",
@@ -51,7 +50,6 @@ function App() {
   };
 
   const connectWalletConnect = async () => {
-    console.log("hola");
     try {
       const provider = new WalletConnectProvider({
         rpc: {
@@ -101,7 +99,6 @@ function App() {
 
   useEffect(() => {
     let user = window.localStorage.getItem("userAddress");
-    console.log(user, "user");
 
     if (user) {
       connectMetamask();

@@ -1,21 +1,18 @@
 import Gear from "../../icons/Gear";
 import History from "./../../icons/History";
-
+import Popup from "reactjs-popup";
 import Info from "../../icons/Info";
 import NumberFormat from "react-number-format";
 import { useState } from "react";
 
 export default function Form({ trade, setTrade, className, title, children }) {
-  const [percentage, setPercentage] = useState("");
   const [minutes, setMinutes] = useState("");
-  const [switchers, setSwitchers] = useState([false, false, false, false]);
   const [dropdownShowed, setDropdownShowed] = useState(false);
   const [selected, setSelected] = useState(2);
 
   const setSlippage = (num) => {
     let amountOutMin = ((100 - num) * trade.amountOut) / 100;
     setTrade({ ...trade, slippage: num, amountOutMin });
-    console.log(trade);
   };
 
   return (
@@ -40,7 +37,27 @@ export default function Form({ trade, setTrade, className, title, children }) {
               <div className="dropdown__scrollwrapper scrollwrapper">
                 <div className="dropdown__label dropdown__label--mt">
                   <span>Slippage tolerance</span>
-                  <Info className="dropdown__label-icon" />
+                  <Popup
+                    // key={`tp-${item.id}`}
+                    trigger={
+                      <button
+                        type="button"
+                        style={{ padding: "0px 0px 0px 0px" }}
+                        className="button"
+                      >
+                        <Info className="form__info-icon" />
+                      </button>
+                    }
+                    position={"top left"}
+                    on={["hover", "focus"]}
+                    arrow={false}
+                  >
+                    <div className="info-popup">
+                      Setting a high slippage tolerance can help transactions
+                      succeed, but you may not get such a good price. Use with
+                      caution.
+                    </div>
+                  </Popup>
                 </div>
                 <div className="dropdown__variants">
                   <ul className="dropdown__variants-list">
@@ -104,7 +121,26 @@ export default function Form({ trade, setTrade, className, title, children }) {
                 </div>
                 <div className="dropdown__label dropdown__label--mt">
                   <span>Transaction deadline</span>
-                  <Info className="dropdown__label-icon" />
+                  <Popup
+                    // key={`tp-${item.id}`}
+                    trigger={
+                      <button
+                        type="button"
+                        style={{ padding: "0px 0px 0px 0px" }}
+                        className="button"
+                      >
+                        <Info className="form__info-icon" />
+                      </button>
+                    }
+                    position={"top left"}
+                    on={["hover", "focus"]}
+                    arrow={false}
+                  >
+                    <div className="info-popup">
+                      Your transaction will revert if it is left confirming for
+                      longer than this time.
+                    </div>
+                  </Popup>
                 </div>
                 <div className="dropdown__row">
                   <NumberFormat
@@ -118,79 +154,6 @@ export default function Form({ trade, setTrade, className, title, children }) {
                     minutes
                   </label>
                 </div>
-                <h3 className="dropdown__title dropdown__title--mt">
-                  Interface Settings
-                </h3>
-                <ul className="dropdown__list">
-                  <li className="dropdown__item dropdown__label">
-                    <span>Toggle Chart</span>
-                    <Info className="dropdown__label-icon" />
-                    <button
-                      className={
-                        "switcher dropdown__switcher" +
-                        (switchers[0] ? " active" : "")
-                      }
-                      onClick={() =>
-                        setSwitchers(
-                          switchers.map((item, index) =>
-                            index === 0 ? !item : item
-                          )
-                        )
-                      }
-                    />
-                  </li>
-                  <li className="dropdown__item dropdown__label">
-                    <span>Toggle Chart Size Large</span>
-                    <Info className="dropdown__label-icon" />
-                    <button
-                      className={
-                        "switcher dropdown__switcher" +
-                        (switchers[1] ? " active" : "")
-                      }
-                      onClick={() =>
-                        setSwitchers(
-                          switchers.map((item, index) =>
-                            index === 1 ? !item : item
-                          )
-                        )
-                      }
-                    />
-                  </li>
-                  <li className="dropdown__item dropdown__label">
-                    <span>Toggle Expert Mode</span>
-                    <Info className="dropdown__label-icon" />
-                    <button
-                      className={
-                        "switcher dropdown__switcher" +
-                        (switchers[2] ? " active" : "")
-                      }
-                      onClick={() =>
-                        setSwitchers(
-                          switchers.map((item, index) =>
-                            index === 2 ? !item : item
-                          )
-                        )
-                      }
-                    />
-                  </li>
-                  <li className="dropdown__item dropdown__label">
-                    <span>Disable Multihops</span>
-                    <Info className="dropdown__label-icon" />
-                    <button
-                      className={
-                        "switcher dropdown__switcher" +
-                        (switchers[3] ? " active" : "")
-                      }
-                      onClick={() =>
-                        setSwitchers(
-                          switchers.map((item, index) =>
-                            index === 3 ? !item : item
-                          )
-                        )
-                      }
-                    />
-                  </li>
-                </ul>
               </div>
             </div>
           </div>

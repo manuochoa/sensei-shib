@@ -9,21 +9,7 @@ export default function Select({
   list,
   callback,
 }) {
-  const [selectList, setSelectList] = useState(list);
   const [opened, setOpened] = useState(false);
-  // let selectedTitle = selectList.find((item) => item.selected === true).symbol;
-  // let SelectedIcon = selectList.find((item) => item.selected === true).logoURI;
-
-  function selectItem(index) {
-    console.log(index, selectList[index]);
-    setSelectList((state) =>
-      state.map((item, itemIndex) => ({
-        ...item,
-        selected: itemIndex === index ? true : false,
-      }))
-    );
-    callback && callback(index);
-  }
 
   function toggleSelect() {
     setOpened((state) => !opened);
@@ -41,12 +27,13 @@ export default function Select({
     return () => {
       document.removeEventListener("click", handleDocumentClick);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [opened]);
 
   return (
     <div className={"select " + (className || "") + (opened ? " opened" : "")}>
       <button className="select__button" onClick={toggleSelect}>
-        <img src={selected.logoURI} className="select__button-icon" />
+        <img src={selected.logoURI} alt="" className="select__button-icon" />
         <span className="select__button-text">{selected.symbol}</span>
         <Enlarge className="select__button-arrows" />
       </button>
@@ -60,7 +47,11 @@ export default function Select({
                   setTokens(list[index], side);
                 }}
               >
-                <img src={item.logoURI} className="select__button-icon" />
+                <img
+                  src={item.logoURI}
+                  alt=""
+                  className="select__button-icon"
+                />
                 <span>{item.symbol}</span>
               </button>
             </li>

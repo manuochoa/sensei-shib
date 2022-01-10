@@ -5,8 +5,6 @@ import ContratInterface, {
 import tokenInterface from "../interface/tokenInterface";
 import factoryInterface from "../interface/factoryInterface";
 import allocationInterface from "../interface/allocationInterface";
-import ABI from "../abi/router.json";
-import Web3 from "web3";
 
 export const swap = async (
   amountIn,
@@ -100,9 +98,7 @@ export const getQuote = async (amount, path, walletType, quoteType) => {
 export const Approve = async (walletType, userAddress, address) => {
   try {
     let myContract = await tokenInterface(walletType, address);
-    let amount = web3.utils.toWei(
-      "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-    );
+
     let receipt = await myContract.methods
       .approve(
         contractAddress,
@@ -133,7 +129,6 @@ export const checkBalance = async (walletType, userAddress, address) => {
   try {
     let myContract = await tokenInterface(walletType, address);
     let receipt = await myContract.methods.balanceOf(userAddress).call();
-    console.log(walletType, userAddress, address, receipt, "funct");
 
     return receipt;
   } catch (error) {
@@ -274,7 +269,6 @@ export const removeLiquidityETH = async (
 
 export const checkAllocationStatus = async (userAddress, walletType) => {
   try {
-    console.log(userAddress, "user here");
     let myContract = await allocationInterface(walletType);
 
     let userAllocation = await myContract.methods
@@ -288,7 +282,6 @@ export const checkAllocationStatus = async (userAddress, walletType) => {
         .call();
     }
 
-    console.log(stages, "stages", userAllocation, startTime);
     return { stages, userAllocation, startTime };
   } catch (error) {
     console.log(error);

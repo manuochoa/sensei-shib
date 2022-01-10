@@ -13,6 +13,7 @@ import {
   checkBalance,
   getNativeBalance,
 } from "../blockchain/exchange";
+import Popup from "reactjs-popup";
 import { tokens } from "../blockchain/tokenList.json";
 
 export default function Swap({ walletType, userAddress, setPopupShow }) {
@@ -63,7 +64,6 @@ export default function Swap({ walletType, userAddress, setPopupShow }) {
   };
 
   const changeSides = async () => {
-    console.log("change sides");
     let tokenOut = trade.tokenIn;
     let tokenIn = trade.tokenOut;
     setTrade({
@@ -104,7 +104,6 @@ export default function Swap({ walletType, userAddress, setPopupShow }) {
   };
 
   const checkTokenAllowance = async () => {
-    console.log("checking allowance");
     if (trade.tokenIn.name === "BNB") {
       setEnoughAllowance(true);
     } else {
@@ -237,15 +236,18 @@ export default function Swap({ walletType, userAddress, setPopupShow }) {
 
   useEffect(() => {
     checkTokenAllowance();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trade.tokenIn]);
 
   useEffect(() => {
     getUserBalance();
     getExchangeRate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trade.tokenIn, trade.tokenOut, userAddress]);
 
   useEffect(() => {
     getExchangeRate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trade.amountIn]);
 
   return (
@@ -313,7 +315,28 @@ export default function Swap({ walletType, userAddress, setPopupShow }) {
             <li className="form__info-item">
               <span className="form__text">
                 <p>Minimum received</p>
-                <Info className="form__info-icon" />
+                <span>
+                  <Popup
+                    // key={`tp-${item.id}`}
+                    trigger={
+                      <button
+                        type="button"
+                        style={{ padding: "0px 0px 0px 0px" }}
+                        className="button"
+                      >
+                        <Info className="form__info-icon" />
+                      </button>
+                    }
+                    position={"top left"}
+                    on={["hover", "focus"]}
+                    arrow={false}
+                  >
+                    <div className="info-popup">
+                      Your transaction will revert if there is a large,
+                      unfavorable price movement before it is confirmed.
+                    </div>
+                  </Popup>
+                </span>
               </span>
               <span className="form__text form__text--main">
                 {trade.amountOutMin || 0} {trade.tokenOut.symbol}
@@ -322,14 +345,58 @@ export default function Swap({ walletType, userAddress, setPopupShow }) {
             <li className="form__info-item">
               <span className="form__text">
                 <p>Price impact</p>
-                <Info className="form__info-icon" />
+
+                <span>
+                  <Popup
+                    // key={`tp-${item.id}`}
+                    trigger={
+                      <button
+                        type="button"
+                        style={{ padding: "0px 0px 0px 0px" }}
+                        className="button"
+                      >
+                        <Info className="form__info-icon" />
+                      </button>
+                    }
+                    position={"top left"}
+                    on={["hover", "focus"]}
+                    arrow={false}
+                  >
+                    <div className="info-popup">
+                      The difference between the market price and estimated
+                      price due to trade size.
+                    </div>
+                  </Popup>
+                </span>
               </span>
               <span className="form__text form__text--main">{impact}%</span>
             </li>
             <li className="form__info-item">
               <span className="form__text">
                 <p>Trade fee</p>
-                <Info className="form__info-icon" />
+                <span>
+                  <Popup
+                    // key={`tp-${item.id}`}
+                    trigger={
+                      <button
+                        type="button"
+                        style={{ padding: "0px 0px 0px 0px" }}
+                        className="button"
+                      >
+                        <Info className="form__info-icon" />
+                      </button>
+                    }
+                    position={"top left"}
+                    on={["hover", "focus"]}
+                    arrow={false}
+                  >
+                    <div className="info-popup">
+                      For each trade a 0.25% fee is paid - 0.17% to LP token
+                      holders - 0.03% to the Treasury - 0.05% towards CAKE
+                      buyback and burn
+                    </div>
+                  </Popup>
+                </span>
               </span>
               <span className="form__text form__text--main">
                 {trade.amountIn * 0.0025} {trade.tokenIn.symbol}

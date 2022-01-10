@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../img/common/logo.png";
 import More from "./../../icons/More";
-import Docs from "./../../icons/Docs";
 import Popup from "reactjs-popup";
 import { useLocation } from "react-router-dom";
 
@@ -39,7 +38,6 @@ export default function Header({
   setUserAddress,
   disconnectWallet,
 }) {
-  const [accounts] = useState([""]);
   const location = useLocation();
   const [mobileScreen, setMobileScreen] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
@@ -73,7 +71,7 @@ export default function Header({
         <ul className={"header__menu" + (menuVisible ? " opened" : "")}>
           {menu.map((item, index) => {
             return (
-              <li className="header__menu-item" key={item.id}>
+              <li className="header__menu-item" key={index}>
                 {mobileScreen ? (
                   <div onClick={() => setSubMenuVisible(index)}>
                     <h1>{item.title}</h1>
@@ -85,6 +83,7 @@ export default function Header({
                       {item.submenu.map((el, i) => {
                         return (
                           <Link
+                            key={i}
                             to={el.to}
                             className={
                               "header__menu-link" +
@@ -118,6 +117,7 @@ export default function Header({
                       {item.submenu.map((el, i) => {
                         return (
                           <Link
+                            key={i}
                             to={el.to}
                             className={
                               "header__menu-link" +
