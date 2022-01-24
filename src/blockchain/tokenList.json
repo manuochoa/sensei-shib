@@ -1,0 +1,76 @@
+{
+  "name": "PancakeSwap Default List",
+  "selected": false,
+  "timestamp": "2021-03-17T09:56:23Z",
+  "version": {
+    "major": 2,
+    "minor": 0,
+    "patch": 1
+  },
+  "tags": {},
+  "logoURI": "https://exchange.pancakeswap.finance/images/pancakeswap.png",
+  "keywords": ["pancake", "default"],
+  "tokens": [
+    {
+      "name": "Sensei Shib",
+      "selected": true,
+      "symbol": "SENSEI",
+      "address": "0xC58B6593B37D825779330Cd58B1f250e9eD7E10A",
+      "decimals": 9,
+      "logoURI": "/images/logo.png"
+    },
+    {
+      "name": "BNB",
+      "selected": true,
+      "symbol": "BNB",
+      "address": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+      "decimals": 18,
+      "logoURI": "https://tokens.1inch.io/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c.png"
+    },
+    {
+      "address": "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
+      "chainId": 56,
+      "selected": false,
+      "name": "Ethereum Token",
+      "symbol": "ETH",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/complusnetwork/default-token-list/master/src/bsc/0x2170Ed0880ac9A755fd29B2688956BD959F933F8/logo.png"
+    },
+    {
+      "address": "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+      "chainId": 56,
+      "selected": false,
+      "name": "USD Coin",
+      "symbol": "USDC",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/complusnetwork/default-token-list/master/src/bsc/0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d/logo.png"
+    },
+    {
+      "address": "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+      "chainId": 56,
+      "selected": false,
+      "name": "BUSD Token",
+      "symbol": "BUSD",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/complusnetwork/default-token-list/master/src/bsc/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/logo.png"
+    },
+    {
+      "address": "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
+      "chainId": 56,
+      "selected": false,
+      "name": "BTC Token",
+      "symbol": "BTC",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/complusnetwork/default-token-list/master/src/bsc/0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c/logo.png"
+    },
+    {
+      "address": "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82",
+      "chainId": 56,
+      "selected": false,
+      "name": "PancakeSwap Token",
+      "symbol": "Cake",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/complusnetwork/default-token-list/master/src/bsc/0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82/logo.png"
+    }
+  ]
+}
