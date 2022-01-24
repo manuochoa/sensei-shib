@@ -266,7 +266,7 @@ export default function Swap({ walletType, userAddress, setPopupShow }) {
   };
 
   const toWei = (num, decimals) => {
-    return Moralis.Units.Token(num, decimals);
+    return Moralis.Units.Token(num, decimals) || num ** 10 * decimals;
   };
 
   useEffect(() => {
