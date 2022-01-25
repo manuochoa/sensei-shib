@@ -4,13 +4,13 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "_tokenToDistribute",
+          "name": "_token",
           "type": "address"
         },
         {
-          "internalType": "uint256",
-          "name": "_startTime",
-          "type": "uint256"
+          "internalType": "address",
+          "name": "_reserveWallet",
+          "type": "address"
         }
       ],
       "stateMutability": "nonpayable",
@@ -72,43 +72,30 @@
         },
         {
           "indexed": false,
+          "internalType": "uint8",
+          "name": "class",
+          "type": "uint8"
+        },
+        {
+          "indexed": false,
           "internalType": "uint256",
-          "name": "allocation",
+          "name": "amount",
           "type": "uint256"
         },
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "timestamp",
+          "name": "timeStart",
           "type": "uint256"
-        }
-      ],
-      "name": "addedManualAllocation",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "address[]",
-          "name": "users",
-          "type": "address[]"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256[]",
-          "name": "allocations",
-          "type": "uint256[]"
         },
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "timestamp",
+          "name": "timeEnd",
           "type": "uint256"
         }
       ],
-      "name": "allocationSetted",
+      "name": "deposit",
       "type": "event"
     },
     {
@@ -122,6 +109,18 @@
         },
         {
           "indexed": false,
+          "internalType": "uint8",
+          "name": "class",
+          "type": "uint8"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "onTime",
+          "type": "bool"
+        },
+        {
+          "indexed": false,
           "internalType": "uint256",
           "name": "amount",
           "type": "uint256"
@@ -129,79 +128,103 @@
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "timestamp",
+          "name": "earnings",
           "type": "uint256"
         }
       ],
-      "name": "stageClaimed",
+      "name": "withdraw",
       "type": "event"
     },
     {
-      "anonymous": false,
+      "inputs": [],
+      "name": "acceptedToken",
+      "outputs": [
+        {
+          "internalType": "contract IERC20",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
-          "indexed": false,
           "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "timestamp",
+          "name": "_amount",
           "type": "uint256"
         }
       ],
-      "name": "vestingFunded",
-      "type": "event"
+      "name": "enterLevel0",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "enterLevel1",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "enterVip",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
       "inputs": [
         {
           "internalType": "address",
-          "name": "_user",
+          "name": "user",
           "type": "address"
         },
         {
+          "internalType": "uint8",
+          "name": "class",
+          "type": "uint8"
+        },
+        {
           "internalType": "uint256",
-          "name": "_allocation",
+          "name": "balance",
           "type": "uint256"
         }
       ],
-      "name": "addManualAllocation",
-      "outputs": [],
-      "stateMutability": "nonpayable",
+      "name": "getInterest",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "inputs": [
         {
-          "internalType": "uint256",
-          "name": "stage",
-          "type": "uint256"
+          "internalType": "address",
+          "name": "",
+          "type": "address"
         }
       ],
-      "name": "claim",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "fundVesting",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "isFunded",
+      "name": "isLevel0",
       "outputs": [
         {
           "internalType": "bool",
@@ -218,19 +241,141 @@
           "internalType": "address",
           "name": "",
           "type": "address"
+        }
+      ],
+      "name": "isLevel1",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
         },
+        {
+          "internalType": "uint8",
+          "name": "class",
+          "type": "uint8"
+        }
+      ],
+      "name": "isOnTime",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "isVip",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "level0APY",
+      "outputs": [
         {
           "internalType": "uint256",
           "name": "",
           "type": "uint256"
         }
       ],
-      "name": "isStageClaimed",
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "level0Balance",
       "outputs": [
         {
-          "internalType": "bool",
+          "internalType": "uint256",
+          "name": "balance",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timeStarted",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timeFinish",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "level1APY",
+      "outputs": [
+        {
+          "internalType": "uint256",
           "name": "",
-          "type": "bool"
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "level1Balance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "balance",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timeStarted",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timeFinish",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -247,6 +392,13 @@
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -270,42 +422,11 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "address[]",
-          "name": "_users",
-          "type": "address[]"
-        },
-        {
-          "internalType": "uint256[]",
-          "name": "_allocations",
-          "type": "uint256[]"
-        }
-      ],
-      "name": "setUserAllocation",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
       "inputs": [],
-      "name": "startTime",
+      "name": "reserveWallet",
       "outputs": [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "tokenToDistribute",
-      "outputs": [
-        {
-          "internalType": "contract IERC20",
+          "internalType": "address",
           "name": "",
           "type": "address"
         }
@@ -314,55 +435,16 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "tokensAvailable",
-      "outputs": [
+      "inputs": [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
+          "internalType": "address",
+          "name": "_reserveWallet",
+          "type": "address"
         }
       ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "tokensNotDelivered",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "totalAllocations",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "totalDistributed",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
+      "name": "setReserveWallet",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -379,6 +461,13 @@
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "unpause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "address",
@@ -386,7 +475,30 @@
           "type": "address"
         }
       ],
-      "name": "userAllocation",
+      "name": "vipBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "balance",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timeStarted",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timeFinish",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "vipLevelAPY",
       "outputs": [
         {
           "internalType": "uint256",
@@ -398,8 +510,40 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "withdrawRemaining",
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdrawLevel0",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdrawLevel1",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdrawVip",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

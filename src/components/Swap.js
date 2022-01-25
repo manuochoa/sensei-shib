@@ -15,8 +15,6 @@ import {
 } from "../blockchain/exchange";
 import Popup from "reactjs-popup";
 import { tokens } from "../blockchain/tokenList.json";
-import { toBn, fromBn } from "evm-bn";
-import { BigNumber } from "@ethersproject/bignumber";
 
 export default function Swap({ walletType, userAddress, setPopupShow }) {
   const [isLoading, setIsLoading] = useState(false);

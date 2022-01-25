@@ -118,7 +118,8 @@ async function ContratInterface(walletType, contractAddress) {
   if (walletType === "Trust_wallet") {
     const provider = new WalletConnectProvider({
       rpc: {
-        56: "https://speedy-nodes-nyc.moralis.io/1d19a6082204e3ecd8dcf0b9/bsc/mainnet",
+        // 56: "https://speedy-nodes-nyc.moralis.io/1d19a6082204e3ecd8dcf0b9/bsc/mainnet",
+        97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
       },
     });
     await provider.enable();
@@ -128,8 +129,11 @@ async function ContratInterface(walletType, contractAddress) {
   } else if (walletType === "Metamask") {
     web3 = new Web3(Web3.givenProvider);
   } else {
+    // const provider = new Web3.providers.HttpProvider(
+    //   "https://bsc-dataseed1.binance.org"
+    // );
     const provider = new Web3.providers.HttpProvider(
-      "https://bsc-dataseed1.binance.org"
+      "https://data-seed-prebsc-1-s1.binance.org:8545/"
     );
     web3 = new Web3(provider);
   }

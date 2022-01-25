@@ -7,7 +7,7 @@ import ConnectPopup from "./components/ConnectPopup";
 import Allocation from "./components/Allocation/Allocation";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3 from "web3";
-import Staking from './components/Staking/Staking';
+import Staking from "./components/Staking/Staking";
 
 function App() {
   const [popupShow, setPopupShow] = useState(false);
@@ -17,7 +17,7 @@ function App() {
 
   function handleMobileScreen() {
     setMobileScreen(window.innerWidth < 768);
-}
+  }
 
   const connectMetamask = async () => {
     try {
@@ -30,22 +30,24 @@ function App() {
 
       window.localStorage.setItem("userAddress", accounts[0]);
 
-      const chainId = await window.ethereum.request({
-        method: "eth_chainId",
-      });
+      // const chainId = await window.ethereum.request({
+      //   method: "eth_chainId",
+      // });
 
-      if (chainId !== "0x38") {
-        await window.ethereum.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId: "0x38" }],
-        });
-      }
+      // if (chainId !== "0x38") {
+      //   await window.ethereum.request({
+      //     method: "wallet_switchEthereumChain",
+      //     params: [{ chainId: "0x38" }],
+      //   });
+      // }
 
       window.ethereum.on("accountsChanged", function (accounts) {
         setUserAddress(accounts[0]);
       });
 
-      window.ethereum.on("chainChanged", (_chainId) => window.location.reload());
+      window.ethereum.on("chainChanged", (_chainId) =>
+        window.location.reload()
+      );
 
       setPopupShow(false);
     } catch (error) {
@@ -57,12 +59,12 @@ function App() {
     try {
       const provider = new WalletConnectProvider({
         rpc: {
-          56: "https://bsc-dataseed.binance.org/",
+          // 56: "https://bsc-dataseed.binance.org/",
 
-          // 97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+          97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
         },
-        network: "binance",
-        chainId: 56,
+        // network: "binance",
+        // chainId: 56,
         infuraId: null,
       });
 
@@ -85,12 +87,12 @@ function App() {
     if (walletType === "Trust_wallet") {
       const provider = new WalletConnectProvider({
         rpc: {
-          56: "https://bsc-dataseed.binance.org/",
+          // 56: "https://bsc-dataseed.binance.org/",
 
-          // 97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+          97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
         },
-        network: "binance",
-        chainId: 56,
+        // network: "binance",
+        // chainId: 56,
         infuraId: null,
       });
       await provider.disconnect();
@@ -113,31 +115,55 @@ function App() {
     window.addEventListener("resize", handleMobileScreen);
 
     return () => {
-        window.removeEventListener("resize", handleMobileScreen);
+      window.removeEventListener("resize", handleMobileScreen);
     };
   }, []);
 
   return (
     <>
-      <Header userAddress={userAddress} popupShow={popupShow} setUserAddress={setUserAddress} setPopupShow={setPopupShow} disconnectWallet={disconnectWallet} mobileScreen={mobileScreen} />
+      <Header
+        userAddress={userAddress}
+        popupShow={popupShow}
+        setUserAddress={setUserAddress}
+        setPopupShow={setPopupShow}
+        disconnectWallet={disconnectWallet}
+        mobileScreen={mobileScreen}
+      />
       <main className="main scrollwrapper">
         <Switch>
           <Redirect path="/" to="/swap" exact />
           <Route path="/exchange" exact>
-            <Swap walletType={walletType} userAddress={userAddress} setPopupShow={setPopupShow} />
+            <Swap
+              walletType={walletType}
+              userAddress={userAddress}
+              setPopupShow={setPopupShow}
+            />
           </Route>
           <Route path="/liquidity" exact>
-            <Liquidity walletType={walletType} userAddress={userAddress} setPopupShow={setPopupShow} />
+            <Liquidity
+              walletType={walletType}
+              userAddress={userAddress}
+              setPopupShow={setPopupShow}
+            />
           </Route>
           <Route path="/vesting" exact>
             <Allocation walletType={walletType} userAddress={userAddress} />
           </Route>
           <Route path="/staking" exact>
-            <Staking mobileScreen={mobileScreen} />
+            <Staking
+              mobileScreen={mobileScreen}
+              walletType={walletType}
+              userAddress={userAddress}
+            />
           </Route>
         </Switch>
       </main>
-      <ConnectPopup connectMetamask={connectMetamask} connectWalletConnect={connectWalletConnect} popupShow={popupShow} setPopupShow={setPopupShow} />
+      <ConnectPopup
+        connectMetamask={connectMetamask}
+        connectWalletConnect={connectWalletConnect}
+        popupShow={popupShow}
+        setPopupShow={setPopupShow}
+      />
     </>
   );
 }
