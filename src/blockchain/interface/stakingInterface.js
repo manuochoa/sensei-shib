@@ -15,7 +15,7 @@ async function stakingInterface(walletType) {
       rpc: {
         // 56: "https://bsc-dataseed.binance.org/",
 
-        97: "http://data-seed-pre-1-s3.binance.org:80",
+        97: "https://speedy-nodes-nyc.moralis.io/1d19a6082204e3ecd8dcf0b9/bsc/testnet",
       },
       // network: "binance",
       // chainId: 56,
@@ -29,7 +29,7 @@ async function stakingInterface(walletType) {
     web3 = new Web3(provider);
   } else {
     const provider = new Web3.providers.HttpProvider(
-      "http://data-seed-pre-1-s3.binance.org:80"
+      "https://speedy-nodes-nyc.moralis.io/1d19a6082204e3ecd8dcf0b9/bsc/testnet"
     );
     // const provider = new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/");
     web3 = new Web3(provider);

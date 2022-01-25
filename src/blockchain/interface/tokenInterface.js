@@ -119,7 +119,7 @@ async function ContratInterface(walletType, contractAddress) {
     const provider = new WalletConnectProvider({
       rpc: {
         // 56: "https://speedy-nodes-nyc.moralis.io/1d19a6082204e3ecd8dcf0b9/bsc/mainnet",
-        97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+        97: "https://speedy-nodes-nyc.moralis.io/1d19a6082204e3ecd8dcf0b9/bsc/testnet",
       },
     });
     await provider.enable();
@@ -133,7 +133,7 @@ async function ContratInterface(walletType, contractAddress) {
     //   "https://bsc-dataseed1.binance.org"
     // );
     const provider = new Web3.providers.HttpProvider(
-      "https://data-seed-prebsc-1-s1.binance.org:8545/"
+      "https://speedy-nodes-nyc.moralis.io/1d19a6082204e3ecd8dcf0b9/bsc/testnet"
     );
     web3 = new Web3(provider);
   }
