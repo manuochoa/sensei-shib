@@ -1,5 +1,5 @@
 // import web3 from "../web3";
-import ABI from "../abi/allocation.json";
+import ABI from "../abi/staking.json";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import detectEthereumProvider from "@metamask/detect-provider";
 
@@ -15,7 +15,7 @@ async function stakingInterface(walletType) {
       rpc: {
         // 56: "https://bsc-dataseed.binance.org/",
 
-        97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+        97: "http://data-seed-pre-1-s3.binance.org:80",
       },
       // network: "binance",
       // chainId: 56,
@@ -29,7 +29,7 @@ async function stakingInterface(walletType) {
     web3 = new Web3(provider);
   } else {
     const provider = new Web3.providers.HttpProvider(
-      "https://data-seed-prebsc-1-s1.binance.org:8545/"
+      "http://data-seed-pre-1-s3.binance.org:80"
     );
     // const provider = new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/");
     web3 = new Web3(provider);
