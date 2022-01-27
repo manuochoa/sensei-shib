@@ -28,6 +28,22 @@ export default function StakingItem({
       useGrouping: false,
     });
     let days = Math.floor(item.left / day);
+    let minutes = Math.floor((item.left % hour) / minute).toLocaleString(
+      undefined,
+      {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+      }
+    );
+
+    console.log(days, typeof days, hours, typeof hours);
+    if (days === 0 && hours === "00") {
+      return `-`;
+    } else if (days < 0 && Number(hours) < 0 && Number(minutes) < 0) {
+      return `Ready`;
+    } else if (days <= 0) {
+      return `${hours > 0 ? hours : "0"} Hours, ${minutes} Minutes`;
+    }
 
     return `${days} Days, ${hours} Hours`;
   };
@@ -136,11 +152,11 @@ export default function StakingItem({
               </div>
             )}
           </div>
-          {index == 2 && (
-            <h4 className="staking__title staking__title--item staking__title--center">
-              Min Staking 100,000,000 $SENSEI
-            </h4>
-          )}
+
+          <h4 className="staking__title staking__title--item staking__title--center">
+            Min Staking {item.min} - Max {item.max} $SENSEI
+          </h4>
+
           <h4 className="staking__title staking__title--item staking__title--center">
             Earnings: {item.earnings} $SENSEI
           </h4>

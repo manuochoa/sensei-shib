@@ -16,7 +16,6 @@ import {
 
 export default function Staking({ mobileScreen, walletType, userAddress }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [userDeposit, setUserDeposit] = useState({});
   const [balance, setUserBalance] = useState("");
   const [isApproved, setIsApproved] = useState(false);
   const [totalStaked, setTotalStaked] = useState("");
@@ -25,26 +24,32 @@ export default function Staking({ mobileScreen, walletType, userAddress }) {
     {
       proposal: 30,
       left: 0,
-      apr: 27.0,
+      apr: 120,
       staked: 0,
       earnings: 0,
       id: 0,
+      min: "50,000,000",
+      max: "500,000,000",
     },
     {
       proposal: 90,
       left: 0,
-      apr: 37.04,
+      apr: 200,
       staked: 0,
       earnings: 0,
       id: 1,
+      min: "50,000,000",
+      max: "500,000,000",
     },
     {
       proposal: "VIP",
       left: 0,
-      apr: 69.04,
+      apr: 300,
       staked: 0,
       earnings: 0,
       id: 3,
+      min: "1,000,000,000",
+      max: "2,500,000,000",
     },
   ]);
 
@@ -96,7 +101,6 @@ export default function Staking({ mobileScreen, walletType, userAddress }) {
         setTotalEarned(earned / 10 ** 9);
         setTotalStaked(staked / 10 ** 9);
         setStakingList(stakingInfo);
-        setUserDeposit(data);
         setUserBalance(balance / 10 ** 9);
         setIsApproved(approval);
       }

@@ -5,7 +5,7 @@ import detectEthereumProvider from "@metamask/detect-provider";
 
 const Web3 = require("web3");
 
-export const stakingAddress = "0xD0cE54Eb8cc261BA588A7D35A4ceb2D41418B05d";
+export const stakingAddress = "0x247051d9636eFC04e5B095D241b59f654439EBEf";
 
 async function stakingInterface(walletType) {
   let web3;
