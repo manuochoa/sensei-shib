@@ -28,8 +28,8 @@ export default function Staking({ mobileScreen, walletType, userAddress }) {
       staked: 0,
       earnings: 0,
       id: 0,
-      min: "50,000,000",
-      max: "500,000,000",
+      min: 50000000,
+      max: 500000000,
     },
     {
       proposal: 90,
@@ -38,8 +38,8 @@ export default function Staking({ mobileScreen, walletType, userAddress }) {
       staked: 0,
       earnings: 0,
       id: 1,
-      min: "50,000,000",
-      max: "500,000,000",
+      min: 50000000,
+      max: 500000000,
     },
     {
       proposal: "VIP",
@@ -48,8 +48,8 @@ export default function Staking({ mobileScreen, walletType, userAddress }) {
       staked: 0,
       earnings: 0,
       id: 3,
-      min: "1,000,000,000",
-      max: "2,500,000,000",
+      min: 1000000000,
+      max: 2500000000,
     },
   ]);
 

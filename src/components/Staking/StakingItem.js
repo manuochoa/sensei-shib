@@ -36,6 +36,8 @@ export default function StakingItem({
       }
     );
 
+    console.log(item.left, "time left");
+
     console.log(days, typeof days, hours, typeof hours);
     if (days === 0 && hours === "00") {
       return `-`;
@@ -65,11 +67,34 @@ export default function StakingItem({
 
   const handleClick = () => {
     if (item.staked > 0) {
+      checkTime();
       handleWithdraw(index, value);
     } else if (isApproved) {
-      handleStake(index, value);
+      if (checkValue()) {
+        handleStake(index, value);
+      }
     } else {
       handleApprove();
+    }
+  };
+
+  const checkTime = () => {
+    if (item.left > 0) {
+      window.alert(
+        "Staking period is not over, if you continue you will not receive any rewards."
+      );
+    }
+  };
+
+  const checkValue = () => {
+    if (value < item.min) {
+      window.alert(`Amount to stake needs to be more than ${item.min}`);
+      return false;
+    } else if (value > item.max) {
+      window.alert(`Amount to stake needs to be less than ${item.max}`);
+      return false;
+    } else {
+      return true;
     }
   };
 
@@ -154,7 +179,8 @@ export default function StakingItem({
           </div>
 
           <h4 className="staking__title staking__title--item staking__title--center">
-            Min Staking {item.min} - Max {item.max} $SENSEI
+            Min Staking {item.min.toLocaleString("en-US")} - Max{" "}
+            {item.max.toLocaleString("en-US")} $SENSEI
           </h4>
 
           <h4 className="staking__title staking__title--item staking__title--center">
