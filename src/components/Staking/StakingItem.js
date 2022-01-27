@@ -178,10 +178,12 @@ export default function StakingItem({
             )}
           </div>
 
-          <h4 className="staking__title staking__title--item staking__title--center">
-            Min Staking {item.min.toLocaleString("en-US")} - Max{" "}
-            {item.max.toLocaleString("en-US")} $SENSEI
-          </h4>
+          {Number(item.staked) === 0 && (
+            <h4 className="staking__title staking__title--item staking__title--center">
+              Min Staking {item.min.toLocaleString("en-US")} - Max{" "}
+              {item.max.toLocaleString("en-US")} $SENSEI
+            </h4>
+          )}
 
           <h4 className="staking__title staking__title--item staking__title--center">
             Earnings: {item.earnings} $SENSEI

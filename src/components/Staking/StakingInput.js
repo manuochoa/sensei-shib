@@ -18,7 +18,9 @@ export default function StakingInput({
           className="input input-wrapper__input"
           value={value}
           onChange={handleInputChange}
-          placeholder="Enter value"
+          placeholder={
+            buttonTitle === "Unstake" ? "Amount to Withdraw" : "Enter value"
+          }
           //   thousandSeparator={true}
           allowLeadingZeros={false}
           allowNegative={false}
