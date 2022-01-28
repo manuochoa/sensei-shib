@@ -131,7 +131,7 @@ function App() {
       />
       <main className="main scrollwrapper">
         <Switch>
-          <Redirect path="/" to="/swap" exact />
+          <Redirect path="/" to="/exchange" exact />
           <Route path="/exchange" exact>
             <Swap
               walletType={walletType}
